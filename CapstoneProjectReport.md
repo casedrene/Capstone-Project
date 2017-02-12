@@ -1,20 +1,20 @@
 Introduction
 ------------
 
-Facebook is the most popular social network worldwide with close to 2 billion monthly active users and it contains a large amount of data about users and their behavior. Moreover, Facebook serves as an advertising platform and its targeted adverts can reach a large amount of users. Monitoring the activity of users on Facebook can help brands identify the trends in user behavior and use this information a competitive advantage. Also, communicating with customers via social media provides an amazing opportunity for brands to connect with their customers, gain valuable feedback and build awareness. Therefore, it is important to create content that has a significant impact on users and encourages them to engage with the brand - through liking, commenting and sharing. Prediction of this impact can help brands create messages that have desired effect on users, which can lead to improvement of their social media image.
+Facebook is the most popular social network worldwide with close to 2 billion monthly active users. It contains a large amount of data about users and their behavior. Moreover, Facebook serves as an advertising platform and its targeted adverts can reach a large amount of users. Monitoring the activity of users on Facebook can help brands identify the trends in user behavior and use this information as a competitive advantage. Also, communicating with customers via social media provides an amazing opportunity for brands to connect with their customers, gain valuable feedback and build awareness. Therefore, it is important to create content that has a significant impact on users and encourages them to engage with the brand - through liking, commenting and sharing. Prediction of this impact can help brands create messages that have desired effect on users, which can lead to improvement of their social media image.
 
 Data Set
 --------
 
-The client is an Australian cosmetics company called Australis Cosmetics. The data set analysed in this project will be acquired from Australis Cosmetics Facebook Page.
+The client is an Australian cosmetics company called Australis Cosmetics. The data set analysed in this project was acquired from Australis Cosmetics Facebook Page. At the time of creating the data set, over 211,000 users 'liked' the Australis Cosmetics Facebook Page. The posts received over 225,000 likes, 33,000 comments, 7,600 shares and 1,600 reactions.
 
 ### User Data
 
-Demographic data that Facebook Page owners can accessed through Facebook Insights provides information such as gender, age and location. Demographic data of users who like a particular Facebook Page used to be available but are not available anymore. Therefore I was not able to access user data for this project.
+Demographic data that Facebook Page owners can access through Facebook Insights provides information such as gender, age and location. Demographic data of users who like a particular Facebook Page used to be available but is not available anymore. Therefore it was not possible to access user data for this project.
 
 ### Page Data
 
-Rfacebook package used to acquire the data set for this project provides and interface to the Facebook API. After getting the User Access Token from Graph API Explorer, Facebook data can be accessed.
+Rfacebook package used to acquire the data set for this project provides and interface to an Facebook API. After getting the User Access Token from Graph API Explorer, Facebook data can be accessed.
 
 ``` r
 #loading Rfacebook library
@@ -22,7 +22,7 @@ library(Rfacebook)
 token <- 'XXXXX'
 ```
 
-The data set consists of a data frame containing a list of all posts posted on Australis Cosmetics Facebook page. This was achieved using the `getPage()` function. Important information in the data set are the text of the post (message), time when the post was created (created\_time), type of the post (type), counts of likes, comments and shares (likes\_count, comments\_count and shares\_count). For posts created in 2016 and later, the `reactions` argument of the `getPage()` function will also provide count of all reactions of the posts (Love, Haha, Wow, Sad and Angry).
+The data set consists of a data frame containing a list of all posts posted on Australis Cosmetics Facebook page. This was achieved using the `getPage()` function. Important information in the data set are the text of the post (message), time when the post was created (created\_time), type of the post (type), counts of likes, comments and shares (likes\_count, comments\_count and shares\_count). For posts created in 2016 and later, the `reactions` argument of the `getPage()` function also provided count of all reactions of the posts (Love, Haha, Wow, Sad and Angry).
 
 ``` r
 #getting posts from Facebook using Page ID
@@ -57,7 +57,7 @@ australis_raw = write.csv("australis_raw.csv")
 Data Cleaning
 -------------
 
-The data set required only few minor transformations. It was necessary to remove the first ten rows of the data set that contained 'Life events' with no text of the post. Also, the time format in the created\_time column, needed to be edited. Time zone has been changed to Australian Eastern Daylight Time and three other columns were created that will be used in analysis. These columns are weekday - containing days of the week then the post was posted, month - containing the months and hour - a column containing the hour of when the post was posted.
+The data set required only few minor transformations. It was necessary to remove the first ten rows of the data set that contained 'Life events' with no text of the post. Also, the time format in the created\_time column needed to be edited. Time zone has been changed to Australian Eastern Daylight Time and three other columns were created that will be used in analysis. These columns are weekday - containing days of the week when the post was posted, month - containing the months and hour - a column containing the hour of when the post was posted.
 
 ``` r
 #loading the file into a data frame
@@ -112,7 +112,7 @@ ggplot(australis, aes(x=australis$created_time, y=australis$shares_count)) +
   theme_bw()
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-7-1.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-7-2.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-7-3.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-7-2.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-7-3.png)
 
 The distribution of the reactions Australis Cosmetics page received shows that the largest potion of reactions is made up of 'love' reactions, followed by 'wow'. On the other hand, the amount of 'sad' and 'angry' is very small.
 
@@ -138,7 +138,7 @@ pie <- pie + xlab(NULL) + ylab(NULL)
 pie
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 Most of the posts on the page include a photo and therefore the most common type of post is 'photo'.
 
@@ -146,7 +146,7 @@ Most of the posts on the page include a photo and therefore the most common type
 barplot(prop.table(table(australis$type)), col = c("palegreen2", "plum2", "skyblue2", "salmon2"), border = NA, space = 0.1, main = "Types of posts")
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 Consequently, 'photo' as a type of posts received the highest number of likes, comments and shares.
 
@@ -173,7 +173,7 @@ ggplot(australis, aes(x=australis$type, y=australis$shares_count)) +
   theme_bw()
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-10-1.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-10-2.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-10-3.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-10-2.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-10-3.png)
 
 Most posts were posted in the afternoon and in the morning. Smaller portion of posts were posted in the evening and very few were posted at night.
 
@@ -191,7 +191,7 @@ day_sections <- cut(x=australis$hour, breaks=day_breaks, labels=day_labels, incl
 barplot(prop.table(table(day_sections)), col = c("sky blue", "pink", "green", "magenta"), border = NA, space = 0.1, main = "The time of creating the posts divided into day sections")
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 The amount of posts during the work days is very similar for each day with slightly higher number of posts on Friday. The amount of posts posted during the weekend is significantly lower.
 
@@ -201,7 +201,7 @@ australis$weekday <- wday(australis$created_time, label = TRUE)
 barplot(prop.table(table(australis$weekday)), col = c("aquamarine3", "antiquewhite3", "coral1", "steelblue1", "brown1", "darkseagreen3", "goldenrod2"),  border = NA, space = 0.1, main = "The time of creating the posts divided into days of the week")
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 Posts posted in the afternoon received the most likes, which is not surprising because more than a half of posts were posted in the afternoon. Posts posted in the morning received more than a quarter of all likes and posts posted in the evening received a smaller amount of likes.
 
@@ -242,7 +242,7 @@ pie2 <- pie2 + xlab(NULL) + ylab(NULL)
 pie2
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 Posts posted in the afternoon also received more than a half of all comments. Posts posted in the evening received about a quarter and posts posted in the morning received slightly smaller amount of the comments.
 
@@ -281,7 +281,7 @@ piecom <- piecom + xlab(NULL) + ylab(NULL)
 piecom
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 Posts posted in the afternoon were shared the most. Posts posted in the morning received more than a quarter of all shares and posts posted in the evening received a smaller amount of shares.
 
@@ -320,7 +320,7 @@ piesh <- piesh + xlab(NULL) + ylab(NULL)
 piesh
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 The total number of likes per work days is evenly distributed and the amount of likes per post posted during the weekend is lower.
 
@@ -359,7 +359,7 @@ pie3 <- pie3 + xlab(NULL) + ylab(NULL)
 pie3
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 The distribution of comments during weekdays is similar to the distribution of likes.
 
@@ -398,7 +398,7 @@ pie4 <- pie4 + xlab(NULL) + ylab(NULL)
 pie4
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-17-1.png)
 
 The distribution of shares during weekdays is similar to the distribution of likes and comments.
 
@@ -437,10 +437,16 @@ pie5 <- pie5 + xlab(NULL) + ylab(NULL)
 pie5
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 Sentiment Analysis
 ------------------
+
+Media monitoring allows companies to gain valuable information about public opinion on specific topics. Sentiment analysis is a process that can help to understand the opinions and attitudes of the customers of Australis Cosmetics who engage with the company Facebook.
+
+Semantic analysis was also used to create a metric for numerically assessing the emotional tone of the posts and comments. This quantitative metric enables comparison of the posts and observation of how page users react to varying values of positive and negative sentiment. The sentiment in comments can say a lot about how page users feel about the brand which may impact their buying behavior.
+
+`AFINN`, `bing` and `nrc` lexicons provide various ways of classifying and evaluating the sentiment of a sequence of words, which will be discussed in more detail later. However, none of these lexicons is specifically tailored to cosmetics industry which may result in incorrect classification of certain words. Consequently, understanding the context of the analysis is very important when interpreting the results.
 
 Tidytext package and Text Mining with R tutorial (<http://tidytextmining.com/>) was used to perform the sentiment analysis of the posts and comments on Australis Cosmetics Facebook Page.
 
@@ -476,12 +482,12 @@ cleanpost <- anti_join(posts1, stopwords, by = "word")
 cleancom <- anti_join(comments1, stopwords, by = "word")
 ```
 
-The posts and comments included many links so expressions as 'http' and 'bit.ly' that appeared frequently were removed. After that, the expressions containing digits were removed as well and the data frames for posts and comments were created.
+The posts and comments included many links so expressions as 'http' and 'bit.ly' that appeared frequently were removed. Expressions 'australis' and 'online' were removed as well. After that, the expressions containing digits were removed as well and the data frames for posts and comments were created.
 
 ``` r
 #cleaning expressions 
-cleanpost2 <- subset(cleanpost, cleanpost$word!="http" & cleanpost$word!="bit.ly")
-cleancom2 <- subset(cleancom, cleancom$word!="http" & cleancom$word!="bit.ly")
+cleanpost2 <- subset(cleanpost, cleanpost$word!="http" & cleanpost$word!="bit.ly" & cleanpost$word!="australis" & cleanpost$word!="online")
+cleancom2 <- subset(cleancom, cleancom$word!="http" & cleancom$word!="bit.ly" & cleancom$word!="australis")
 
 #removing digits
 posts <- gsub('[[:digit:]]+', '', cleanpost2$word)
@@ -530,7 +536,7 @@ freqc_tb <- setDT(smallfreqc_df, keep.rownames = TRUE)[]
 colnames(freqc_tb) <- c("word", "frq")
 ```
 
-The order of words is set to be same as in the data frame and a par plot is created using `ggplot2` package.
+The order of words is set to be same as in the data frame and a bar plot is created using `ggplot2` package.
 
 ``` r
 #word column ordered as in data frame
@@ -558,15 +564,15 @@ freqplot2 <-
 freqplot2
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-25-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-25-1.png)
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-26-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-26-1.png)
 
 ### Sentiment in Posts and Comments
 
 Sentiment in posts and comments was evaluated using lexicons included in the `tidytext`package.
 
-The lexicons are based on unigrams - single words. The Bing lexicon divides words into positive and negative. The AFINN lexicon gives each word a score between -5 (negative sentiment) and 5 (positive sentiment). Nrc lexicon contains words divided according to emotions - positive, negative, anger, anticipation, disgust, fear, joy, sadness, surprise, and trust.
+The lexicons are based on unigrams - single words. The `bing` lexicon divides words into positive and negative. The `AFINN` lexicon gives each word a score between -5 (negative sentiment) and 5 (positive sentiment). The `nrc` lexicon contains words divided according to emotions - positive, negative, anger, anticipation, disgust, fear, joy, sadness, surprise, and trust.
 
 The one-term-per-row tables for posts and comments were created first. These were joined with the `AFINN` lexicon and each word received a score. The results were grouped by line and the sentiment scores for each post were created.
 
@@ -640,9 +646,9 @@ bind_rows(afinn1,
 
 Judging from the plots, all lexicons provide similar results. Sentiment in the posts was more positive, however there are some posts with negative sentiment. On the other hand, sentiment in the comments seems to be mainly positive, with only few exceptions. This shows that the brand is getting largely positive feedback from its fans on Facebook. Sentiment in the comments associated with some of the posts also received much higher positive score than the rest. These posts should be investigated more closely.
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-30-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-30-1.png)
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-31-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-31-1.png)
 
 The `bing` lexicon was also used to select the top 10 words that most contribute to both positive and negative sentiment in posts and comments. The words that most contribute to sentiment in posts and comments are similar which suggests that the brand and the fans are using similar language which improves communication. However, considering the context, expressions such as matte or dark might not have negative connotation when talking about make-up.
 
@@ -684,9 +690,9 @@ comcount %>%
   coord_flip()
 ```
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-33-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-33-1.png)
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-34-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-34-1.png)
 
 The `reshape2` and `wordcloud` packages was used to visualize the most used words divided into positive and negative words using the `bing` lexicon. The frequency was calculated and most common words were used to create a word cloud.
 
@@ -710,9 +716,11 @@ comments_s %>%
 
 Word cloud for posts.
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-36-1.png) Word cloud for comments.
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-36-1.png)
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-37-1.png)
+Word cloud for comments.
+
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-37-1.png)
 
 N-gram is a consecutive sequence of words. By setting `n` to 2, pairs of two consecutive words will be created. This can be used to model relationship between them. Bigrams were used to analyze comments and find words, that are most frequently preceded by word 'australis'. The comments were divided into pairs of words, each pair was counted and stop words were removed. To get sentiment, `AFINN` lexicon was used. `ggplot2` was used to plot the results.
 
@@ -768,39 +776,39 @@ aus_words %>%
   coord_flip()
 ```
 
-    ## # A tibble: 137,805 × 2
+    ## # A tibble: 138,206 × 2
     ##     bigram     n
     ##      <chr> <int>
-    ## 1     ed u 11050
-    ## 2   u 00a0  5531
-    ## 3   00a0 u  5525
-    ## 4   u 00bd  5121
-    ## 5  00bd ed  5018
-    ## 6   u 00b8  3179
-    ## 7   00b8 u  3152
+    ## 1     ed u 11094
+    ## 2   u 00a0  5553
+    ## 3   00a0 u  5547
+    ## 4   u 00bd  5143
+    ## 5  00bd ed  5038
+    ## 6   u 00b8  3190
+    ## 7   00b8 u  3163
     ## 8   u 008d  1487
-    ## 9   u 00b2  1122
-    ## 10  00b2 u  1115
-    ## # ... with 137,795 more rows
+    ## 9   u 00b2  1127
+    ## 10  00b2 u  1120
+    ## # ... with 138,196 more rows
 
-    ## Source: local data frame [338 x 3]
+    ## Source: local data frame [339 x 3]
     ## Groups: word1 [1]
     ## 
     ##        word1      word2     n
     ##        <chr>      <chr> <int>
     ## 1  australis  cosmetics   256
     ## 2  australis   products    56
-    ## 3  australis         is    33
-    ## 4  australis essentials    32
+    ## 3  australis essentials    33
+    ## 4  australis         is    33
     ## 5  australis    product    29
     ## 6  australis          i    21
     ## 7  australis     makeup    20
     ## 8  australis       make    17
     ## 9  australis      fresh    15
-    ## 10 australis        and    12
-    ## # ... with 328 more rows
+    ## 10 australis        and    13
+    ## # ... with 329 more rows
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-39-1.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-39-1.png)
 
 Sentiment analysis and `nrc` package were also used to compare the sentiment in the comments with the corresponding reactions for 'love' and 'wow'. The amount of 'haha', 'sad' and 'angry' reactions was much smaller so these reactions were not compared.
 
@@ -844,7 +852,7 @@ ggplot(australis_reactions, aes(x=australis_reactions$created_time, y=australis_
   ggtitle("The distribution of love reactions")
 ```
 
-The reactions do not match the sentiment in the comments.
+The reactions do not match the sentiment in the comments. This can be a result of an incorrect classification of some words as mentioned earlier. Industry-specific lexicon could improve accuracy of the classification of words such as 'dark', 'matte', 'killer' or 'naughty' which usually have a negative connotation but in this context, they should be viewed differently. 'Matte' and 'dark' are some of the words that most significantly contribute to the negative sentiment in the comments. However, if they were classified as positive, the overall sentiment in the comments might match the reactions better. Moreover, text analysis does not perform well when it comes to interpreting short, less obvious and ambiguous messages that include sarcasm or humor. In cases like this, reactions can be used contextualize the results of text analysis and provide some clarification in situations where the sentiment analysis is not sufficient.
 
     ## Source: local data frame [595 x 3]
     ## Groups: index [142]
@@ -863,7 +871,7 @@ The reactions do not match the sentiment in the comments.
     ## 10  1843   cream    10
     ## # ... with 585 more rows
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-43-1.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-43-2.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-43-1.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-43-2.png)
 
 The same process was used to compare 'wow' reactions and 'anticipation' emotion.
 
@@ -915,7 +923,7 @@ Again, the sentiment in the comments does not match the 'wow' reactions.
     ## 10  1911  pretty    10
     ## # ... with 534 more rows
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-45-1.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-45-2.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-45-1.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-45-2.png)
 
 Prediction of Engagement
 ------------------------
@@ -965,7 +973,7 @@ afinn_char2 <- as.character(afinn_df2[,1])
 australis$afinncom <- afinn_char2
 ```
 
-A subset of the data frame was created and only includes variables used in a random forest function and id. Character variables were converted to either factor or numeric type.
+A subset of the data frame was created and only includes variables used in a random forest function and id. Character variables were converted to either factor or numeric type. The subset was also divided into train data set used for training the model and test data set to test the model.
 
 ``` r
 #creating a subset of the data frame
@@ -974,6 +982,12 @@ australis$afincomm <- as.factor(australis$afinncom)
 australis$comlen <- as.numeric(australis$comlen)
 australis$hour <- as.numeric(australis$hour)
 australis_train = subset(australis, select=c("id", "likes_count","comments_count", "shares_count", "comments", "comlen", "weekday", "hour", "afinncom"))
+
+#dividing the data set into training & test datasets
+ set.seed(666)
+ split <- sample(nrow(australis_train), floor(0.7*nrow(australis_train)))
+ train <- australis_train[split,]
+ test <- australis_train[-split,]
 ```
 
 Package `randomForest` was used to create random forest. Variables used to predict the amount of likes of a post were the amount of comments and shares, the length of comments, the sentiment of the comments, weekday and hour when the post was posted.
@@ -987,7 +1001,7 @@ set.seed(300)
 #predicting number of likes
 fit <- randomForest(likes_count ~ comments_count + shares_count + comlen + afinncom +
                     weekday + hour,
-                    data=australis_train, 
+                    data=train, 
                     importance=TRUE, 
                     mtry = 3,
                     ntree=1000)
@@ -998,36 +1012,56 @@ varImpPlot(fit)
 plot(fit)
 ```
 
-Even after experimenting with different values of number of trees (`ntree`) and number of random variables used in each tree (`mtry`), the highest achieved value of explained variance was 55.07%. As a result, this model is not suitable for prediction.
+Even after experimenting with different values of number of trees (`ntree`) and number of random variables used in each tree (`mtry`), the highest achieved value of explained variance was 46.74%.
 
     ## 
     ## Call:
-    ##  randomForest(formula = likes_count ~ comments_count + shares_count +      comlen + afinncom + weekday + hour, data = australis_train,      importance = TRUE, mtry = 3, ntree = 1000) 
+    ##  randomForest(formula = likes_count ~ comments_count + shares_count +      comlen + afinncom + weekday + hour, data = train, importance = TRUE,      mtry = 3, ntree = 1000) 
     ##                Type of random forest: regression
     ##                      Number of trees: 1000
     ## No. of variables tried at each split: 3
     ## 
-    ##           Mean of squared residuals: 20063.39
-    ##                     % Var explained: 55.07
+    ##           Mean of squared residuals: 23063.92
+    ##                     % Var explained: 46.74
 
     ##                  %IncMSE IncNodePurity
-    ## comments_count 14.048650      14535651
-    ## shares_count   57.207969      45830452
-    ## comlen         11.226888      11030070
-    ## afinncom       17.411157       5399901
-    ## weekday         3.190238       4162633
-    ## hour            5.689390       4193700
+    ## comments_count 11.650987      10687153
+    ## shares_count   44.920456      26122024
+    ## comlen          9.502094       8155444
+    ## afinncom       15.555064       4387453
+    ## weekday         5.611049       3634949
+    ## hour            6.123034       3969216
 
-![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-50-1.png)![](CapstoneProjectReport_files/figure-markdown_github/unnamed-chunk-50-2.png)
+![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-50-1.png)![](Capstone_Project_Report_files/figure-markdown_github/unnamed-chunk-50-2.png)
 
 `importance(fit)` and `varImpPlot(fit)` shows the importance of each variable. It is clear that `shares_count` variable has the highest importance in the model. The reason for this could be that the more the post is shared, the more people can view it and engage with it. Moreover, people who are fans of Australis Cosmetics page are likely to have friends who are also interested in make-up and beauty and therefore the posts that are more shared can accumulate more likes.
 
 `plot(fit)` seems to show that there is not a significant reduction in error rate after 300 decision trees.
 
+`predict` function was used for prediction of likes based on the model. Area Under the Curve was calculated using `pROC` package. Multi-class area under the curve is equal to 0.8926 which means that the model is moderately predictive.
+
+``` r
+#testing the model and predicting the amount of likes
+test$outcome <- predict(fit, test)
+
+#calculating Area Under the Curve
+ROC1 <- multiclass.roc(test$likes_count, test$outcome)
+
+AUC1 <- auc(ROC1)
+AUC1
+```
+
+    ## Multi-class area under the curve: 0.8926
+
+Conclusion
+----------
+
+In summary, this report analysed publicly available data collected from the Australis Cosmetics Facebook Page. Exploratory analysis described and visualized information about the distribution of likes, comments, shares and reactions for all posts. Sentiment analysis examined the way page users perceive Australis Cosmetics brand. The results of sentiment analysis can provide answers to questions related to user engagement, reactions to new products and campaigns, brand image etc. These findings can help the company to better understand its customers.
+
 Ideas for Further Research and Recommendations
 ----------------------------------------------
 
-This report was very limited when it comes to available data. More information regarding the user demographics and, reach of the posts and page views could reveal significantly more information and improve the prediction model.
+This report was very limited when it comes to available data. More information regarding the user demographics, reach of the posts and page views could reveal significantly more information and improve the prediction model.
 
 Recommendations:
 
@@ -1035,4 +1069,4 @@ Recommendations:
 
 -   Based on exploratory analysis, if the company decides to post a post where it asks users for feedback in the comments section, it might be useful to take into account the time of the day and the day of the week when users are more likely to respond
 
--   In sentiment analysis, some comments received much higher positive score than others. These posts should also be examined more closely to reveal what evokes such a positive reaction. This finding can be helpful when creating other posts.
+-   In sentiment analysis, some comments received much higher positive score than others. These posts should also be examined more closely to reveal what evokes such a positive reaction. These findings can be helpful when creating other posts.
