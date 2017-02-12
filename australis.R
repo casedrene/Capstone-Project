@@ -9,7 +9,7 @@ library(data.table)
 library(tidyr)
 library(reshape2)
 library(wordcloud)
-
+library(pROC)
 
 token <- 'EAACEdEose0cBAB2RmoAvleZCHeiyvLrqFW2ct930oiqMEDvC666tSvszlI6rRAAjLFsxZAc5TG1gRGPxMbfTb6FDZA5LnnHcggMzfqF3MqRJ2hMgTUwtbKKzea9z84JyCQywdPpDI0ZB7DfONo5RZCs4fhUoblGqq3107aqe4HgZDZD'
 
@@ -333,8 +333,8 @@ cleanpost <- anti_join(posts1, stopwords, by = "word")
 cleancom <- anti_join(comments1, stopwords, by = "word")
 
 #cleaning expressions 
-cleanpost2 <- subset(cleanpost, cleanpost$word!="http" & cleanpost$word!="bit.ly")
-cleancom2 <- subset(cleancom, cleancom$word!="http" & cleancom$word!="bit.ly")
+cleanpost2 <- subset(cleanpost, cleanpost$word!="http" & cleanpost$word!="bit.ly" & cleanpost$word!="australis" & cleanpost$word!="online")
+cleancom2 <- subset(cleancom, cleancom$word!="http" & cleancom$word!="bit.ly" & cleancom$word!="australis")
 
 #removing digits
 posts <- gsub('[[:digit:]]+', '', cleanpost2$word)
@@ -670,6 +670,12 @@ australis$hour <- as.numeric(australis$hour)
 #creating a subset of the data frame
 australis_train = subset(australis, select=c("id", "likes_count", "created_time","comments_count", "shares_count", "comlen", "weekday", "hour", "afinncom"))
 
+#dividing the data set into training & test datasets
+set.seed(666)
+split <- sample(nrow(australis_train), floor(0.7*nrow(australis_train)))
+train <- australis_train[split,]
+test <- australis_train[-split,] 
+
 library(randomForest)
 
 #setting the seed
@@ -678,7 +684,7 @@ set.seed(300)
 #predicting number of likes
 fit <- randomForest(likes_count ~ comments_count + shares_count + comlen + afinncom +
                      weekday + hour,
-                    data=australis_train, 
+                    data=train, 
                     importance=TRUE, 
                     mtry = 3,
                     ntree=1000)
@@ -692,4 +698,13 @@ varImpPlot(fit)
 
 #plottig the error rate
 plot(fit)
+
+#testing the model and predicting the amount of likes
+test$outcome <- predict(fit, test)
+
+#calculating Area Under the Curve
+ROC1 <- multiclass.roc(test$likes_count, test$outcome)
+
+AUC1 <- auc(ROC1)
+AUC1
 
